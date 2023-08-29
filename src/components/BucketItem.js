@@ -9,19 +9,24 @@ const BucketItem = ({ item }) => {
       borderRadius="4px"
       cursor="pointer"
       _hover={{ background: "gray.800" }}
-      flexDirection="column"
+      alignItems="center"
+      gap={4}
     >
-      <Text color="white" fontWeight="bold">
-        {item.title}
-      </Text>
-      <Link
-        color="gray.600"
-        href={item.link}
-        _hover={{ color: "blue.400" }}
-        isExternal
-      >
-        {item.link}
-      </Link>
+      <Flex></Flex>
+      <Flex flexDirection="column">
+        <Text color="white" fontWeight="bold" fontSize="14px">
+          {item.title}
+        </Text>
+        <Link
+          color="gray.600"
+          href={item.link}
+          _hover={{ color: "blue.400" }}
+          isExternal
+          fontSize="14px"
+        >
+          {item.link}
+        </Link>
+      </Flex>
     </Flex>
   );
 };

@@ -84,7 +84,6 @@ const Buckets = ({ user }) => {
             onClick={() => {
               navigate("/");
             }}
-            isLoading={loading}
           />
         </Tooltip>
         {user && (
@@ -96,6 +95,7 @@ const Buckets = ({ user }) => {
                   icon={<AddIcon />}
                   rounded="full"
                   onClick={handleAddCurrent}
+                  isLoading={loading}
                 />
               </Tooltip>
             )}
