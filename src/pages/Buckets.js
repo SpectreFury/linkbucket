@@ -17,7 +17,8 @@ const Buckets = ({ user }) => {
   ]);
   const [tab, setTab] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [bucket, setBucket] = useState(null);
+
+  console.log(location.state);
 
   const handleAddCurrent = async () => {
     setLoading(true);
@@ -27,7 +28,7 @@ const Buckets = ({ user }) => {
         link: tab.url,
       };
 
-      await updateDoc(doc(firestore, "buckets", location.state), {
+      await updateDoc(doc(firestore, "buckets", location.state.id), {
         bucket: arrayUnion(data),
       });
       setLinks((prev) => [...prev, data]);
@@ -48,13 +49,11 @@ const Buckets = ({ user }) => {
     });
 
     const fetchLinks = async () => {
-      const docSnap = await getDoc(doc(firestore, "buckets", location.state));
+      const docSnap = await getDoc(doc(firestore, "buckets", location.state.id));
 
       const data = docSnap.data();
       if (data.bucket.length > 0) {
         setLinks(data.bucket);
-        setBucket(data);
-        console.log(bucket);
       }
     };
     fetchLinks();
@@ -63,9 +62,9 @@ const Buckets = ({ user }) => {
   return (
     <React.Fragment>
       <BucketItems links={links} />
-      {user && bucket && (
+      {user && (
         <React.Fragment>
-          {user.email === bucket.author && (
+          {user.email === location.state.email && (
             <Flex justifyContent="center">
               <Button mt={2} onClick={handleAddCurrent} isLoading={loading}>
                 Add Current

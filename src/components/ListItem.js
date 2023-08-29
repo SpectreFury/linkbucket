@@ -14,7 +14,7 @@ const ListItem = ({ item }) => {
       _hover={{ background: "gray.800" }}
       flexDirection="column"
       onClick={() => {
-        navigate("/buckets", { state: item.id });
+        navigate("/buckets", { state: { id: item.id, email: item.author } });
       }}
     >
       <Text color="white" fontWeight="bold">

@@ -16,7 +16,6 @@ const SignUp = ({ setFormStep, onClose }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [username, setUsername] = useState("");
 
   const [createUserWithEmailAndPassword, newUser, loading, error] =
     useCreateUserWithEmailAndPassword(auth);
@@ -25,10 +24,7 @@ const SignUp = ({ setFormStep, onClose }) => {
     e.preventDefault();
 
     if (password === confirmPassword) {
-      const response = await createUserWithEmailAndPassword(email, password);
-      await setDoc(doc(firestore, "users", response.user.email), {
-        username: username,
-      });
+      await createUserWithEmailAndPassword(email, password);
       onClose();
     }
   };
@@ -36,17 +32,6 @@ const SignUp = ({ setFormStep, onClose }) => {
   return (
     <React.Fragment>
       <form onSubmit={handleSubmit}>
-        <FormControl>
-          <FormLabel htmlFor="username">Username</FormLabel>
-          <Input
-            type="text"
-            name="username"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
-        </FormControl>
         <FormControl>
           <FormLabel htmlFor="email">Email Address</FormLabel>
           <Input

@@ -25,7 +25,7 @@ import {
 } from "@chakra-ui/react";
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
-import { firestore } from "../firebaseConfig";
+import { firestore, auth } from "../firebaseConfig";
 import {
   addDoc,
   doc,
@@ -34,6 +34,7 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import FilteredBucketList from "../components/FilteredBucketList";
+import { useSignOut } from "react-firebase-hooks/auth";
 
 const Home = ({ user, isOpen, onOpen, onClose }) => {
   const {
@@ -49,6 +50,7 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
   const [tabIndex, setTabIndex] = useState(0);
   const [buckets, setBuckets] = useState([]);
   const [initialLoading, setInitialLoading] = useState(false);
+  const [signOut] = useSignOut(auth);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -179,6 +181,7 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
           )}
         </React.Fragment>
       )}
+      <Button onClick={() => signOut()}>Sign Out</Button>
     </React.Fragment>
   );
 };
