@@ -9,12 +9,7 @@ import { Flex, Button, Text } from "@chakra-ui/react";
 
 const Buckets = ({ user }) => {
   const location = useLocation();
-  const [links, setLinks] = useState([
-    {
-      title: "Introduction to linear algebra",
-      link: "https://github.com/ViridescentYT",
-    },
-  ]);
+  const [links, setLinks] = useState([]);
   const [tab, setTab] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -49,7 +44,9 @@ const Buckets = ({ user }) => {
     });
 
     const fetchLinks = async () => {
-      const docSnap = await getDoc(doc(firestore, "buckets", location.state.id));
+      const docSnap = await getDoc(
+        doc(firestore, "buckets", location.state.id)
+      );
 
       const data = docSnap.data();
       if (data.bucket.length > 0) {

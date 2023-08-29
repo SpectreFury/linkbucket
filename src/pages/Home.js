@@ -177,11 +177,11 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
           {user && (
             <Flex justifyContent="center" mt={2} gap={4}>
               <Button onClick={bucketOnOpen}>Create Bucket</Button>
+              <Button onClick={() => signOut()}>Sign Out</Button>
             </Flex>
           )}
         </React.Fragment>
       )}
-      <Button onClick={() => signOut()}>Sign Out</Button>
     </React.Fragment>
   );
 };

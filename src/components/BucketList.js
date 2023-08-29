@@ -4,7 +4,7 @@ import ListItem from "./ListItem";
 
 const BucketList = ({ buckets }) => {
   return (
-    <Stack mt={4} mx={2}>
+    <Stack mt={4} mx={2} maxHeight="400px" overflowY="scroll" pr={2}>
       {buckets.map((item) => (
         <ListItem item={item} />
       ))}
