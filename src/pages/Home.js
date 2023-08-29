@@ -57,6 +57,13 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const duplicateBucket = buckets.find(
+      (bucket) => bucket.title === bucketName && bucket.author === user.email
+    );
+    if (duplicateBucket) {
+      return;
+    }
     setLoading(true);
 
     const data = {
@@ -180,7 +187,7 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
           )}
           {user && (
             <Flex justifyContent="center" mt={2} gap={4}>
-              <IconButton size="sm" icon={<AddIcon onClick={bucketOnOpen}/>} />
+              <IconButton size="sm" icon={<AddIcon />} onClick={bucketOnOpen} />
             </Flex>
           )}
         </React.Fragment>

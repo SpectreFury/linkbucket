@@ -5,14 +5,7 @@ import BucketItems from "../components/BucketItems";
 import { useLocation } from "react-router-dom";
 import { firestore } from "../firebaseConfig";
 import { getDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
-import {
-  Flex,
-  Button,
-  Text,
-  Spinner,
-  IconButton,
-  Tooltip,
-} from "@chakra-ui/react";
+import { Flex, IconButton, Tooltip } from "@chakra-ui/react";
 import { ArrowBackIcon, AddIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 
@@ -27,6 +20,11 @@ const Buckets = ({ user }) => {
   console.log(location.state);
 
   const handleAddCurrent = async () => {
+    const duplicateLink = links.find((item) => item.link === tab.url);
+    if (duplicateLink) {
+      return;
+    }
+
     setLoading(true);
     try {
       const data = {
@@ -86,6 +84,7 @@ const Buckets = ({ user }) => {
             onClick={() => {
               navigate("/");
             }}
+            isLoading={loading}
           />
         </Tooltip>
         {user && (
