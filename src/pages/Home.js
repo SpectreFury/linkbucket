@@ -22,6 +22,8 @@ import {
   TabList,
   Tab,
   Spinner,
+  Tooltip,
+  IconButton,
 } from "@chakra-ui/react";
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
@@ -35,6 +37,7 @@ import {
 } from "firebase/firestore";
 import FilteredBucketList from "../components/FilteredBucketList";
 import { useSignOut } from "react-firebase-hooks/auth";
+import { AddIcon } from "@chakra-ui/icons";
 
 const Home = ({ user, isOpen, onOpen, onClose }) => {
   const {
@@ -157,6 +160,7 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
           variant="soft-rounded"
           index={tabIndex}
           onChange={(newIndex) => setTabIndex(newIndex)}
+          justifyContent="center"
         >
           <TabList>
             <Tab>Browse Buckets</Tab>
@@ -176,8 +180,7 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
           )}
           {user && (
             <Flex justifyContent="center" mt={2} gap={4}>
-              <Button onClick={bucketOnOpen}>Create Bucket</Button>
-              <Button onClick={() => signOut()}>Sign Out</Button>
+              <IconButton size="sm" icon={<AddIcon onClick={bucketOnOpen}/>} />
             </Flex>
           )}
         </React.Fragment>

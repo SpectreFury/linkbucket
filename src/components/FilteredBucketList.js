@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Stack } from "@chakra-ui/react";
 import ListItem from "./ListItem";
-import { firestore } from "../firebaseConfig";
-import { getDocs, collection } from "firebase/firestore";
 
 const FilteredBucketList = ({ buckets, user }) => {
   const filteredBuckets = buckets.filter(
@@ -10,7 +8,7 @@ const FilteredBucketList = ({ buckets, user }) => {
   );
 
   return (
-    <Stack mt={4} mx={2}>
+    <Stack mt={4} mx={2} maxHeight="400px" overflowY="scroll" pr={2}>
       {filteredBuckets.map((item) => (
         <ListItem item={item} />
       ))}

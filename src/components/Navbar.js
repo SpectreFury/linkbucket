@@ -1,10 +1,29 @@
 import React, { useState, useEffect } from "react";
-import { Flex, Text, Avatar, Button, Spinner } from "@chakra-ui/react";
+import {
+  Flex,
+  Text,
+  Avatar,
+  Button,
+  Spinner,
+  Menu,
+  MenuItem,
+  MenuButton,
+  MenuList,
+} from "@chakra-ui/react";
+import { HamburgerIcon } from "@chakra-ui/icons";
+import { auth } from "../firebaseConfig";
+import { useSignOut } from "react-firebase-hooks/auth";
 
 const Navbar = ({ user, userLoading, onOpen }) => {
+  const [signOut] = useSignOut(auth);
+
+  const handleSignOut = async () => {
+    await signOut();
+  };
+
   return (
     <Flex
-      background="#FAF0E6"
+      background="#D8D9DA"
       justifyContent="space-between"
       alignItems="center"
       px={2}
@@ -18,7 +37,22 @@ const Navbar = ({ user, userLoading, onOpen }) => {
       ) : (
         <React.Fragment>
           {user ? (
-            <Avatar name={user.email} size="sm" />
+            <Menu>
+              <MenuButton
+                padding="4px"
+                borderRadius="4px"
+                fontWeight="semibold"
+                _hover={{ background: "#1A202C", color: "white" }}
+              >
+                <Flex alignItems="center" gap={2}>
+                  <Avatar name={user.email} size="sm" />
+                  <Text fontSize="12px">{user.email.split("@")[0]}</Text>
+                </Flex>
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={handleSignOut}>Log out</MenuItem>
+              </MenuList>
+            </Menu>
           ) : (
             <Button variant="link" onClick={() => onOpen()}>
               Log In

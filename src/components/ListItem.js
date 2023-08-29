@@ -1,5 +1,5 @@
 import React from "react";
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Text, Tag } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
 const ListItem = ({ item }) => {
@@ -11,19 +11,26 @@ const ListItem = ({ item }) => {
       p="4px 10px"
       borderRadius="4px"
       cursor="pointer"
-      _hover={{ background: "gray.800" }}
-      flexDirection="column"
+      _hover={{ background: "gray.800", color: "#D8D9DA" }}
       onClick={() => {
         navigate("/buckets", { state: { id: item.id, email: item.author } });
       }}
+      alignItems="center"
+      justifyContent="space-between"
     >
-      <Text color="white" fontWeight="bold">
-        {item.title}
-      </Text>
-      <Text fontSize="12px" color="gray.600" fontWeight="medium">
-        {item.bucket.length} links
-      </Text>
-      <Text fontSize="10px">{item.author}</Text>
+      <Flex flexDirection="column">
+        <Text color="white" fontWeight="bold">
+          {item.title}
+        </Text>
+        <Text fontSize="12px" fontWeight="semibold">
+          {item.author.split("@")[0]}
+        </Text>
+      </Flex>
+      <Flex>
+        <Tag size="sm" colorScheme="teal">
+          {item.bucket.length} links
+        </Tag>
+      </Flex>
     </Flex>
   );
 };

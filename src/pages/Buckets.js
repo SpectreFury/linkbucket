@@ -5,13 +5,24 @@ import BucketItems from "../components/BucketItems";
 import { useLocation } from "react-router-dom";
 import { firestore } from "../firebaseConfig";
 import { getDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
-import { Flex, Button, Text } from "@chakra-ui/react";
+import {
+  Flex,
+  Button,
+  Text,
+  Spinner,
+  IconButton,
+  Tooltip,
+} from "@chakra-ui/react";
+import { ArrowBackIcon, AddIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
 
 const Buckets = ({ user }) => {
   const location = useLocation();
   const [links, setLinks] = useState([]);
   const [tab, setTab] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [initialLoading, setInitialLoading] = useState(false);
+  const navigate = useNavigate();
 
   console.log(location.state);
 
@@ -44,32 +55,55 @@ const Buckets = ({ user }) => {
     });
 
     const fetchLinks = async () => {
-      const docSnap = await getDoc(
-        doc(firestore, "buckets", location.state.id)
-      );
+      setInitialLoading(true);
+      try {
+        const docSnap = await getDoc(
+          doc(firestore, "buckets", location.state.id)
+        );
 
-      const data = docSnap.data();
-      if (data.bucket.length > 0) {
-        setLinks(data.bucket);
+        const data = docSnap.data();
+        if (data.bucket.length > 0) {
+          setLinks(data.bucket);
+        }
+      } catch (error) {
+        console.log("fetchLinks error", error);
       }
+      setInitialLoading(false);
     };
     fetchLinks();
   }, []);
 
   return (
     <React.Fragment>
+      <Flex justifyContent="space-between" mx={2} my={2}>
+        <Tooltip label="Go back">
+          <IconButton
+            size="sm"
+            icon={<ArrowBackIcon />}
+            rounded="full"
+            _hover={{ background: "gray.800", color: "white" }}
+            cursor="pointer"
+            onClick={() => {
+              navigate("/");
+            }}
+          />
+        </Tooltip>
+        {user && (
+          <React.Fragment>
+            {user.email === location.state.email && (
+              <Tooltip label="Add Current">
+                <IconButton
+                  size="sm"
+                  icon={<AddIcon />}
+                  rounded="full"
+                  onClick={handleAddCurrent}
+                />
+              </Tooltip>
+            )}
+          </React.Fragment>
+        )}
+      </Flex>
       <BucketItems links={links} />
-      {user && (
-        <React.Fragment>
-          {user.email === location.state.email && (
-            <Flex justifyContent="center">
-              <Button mt={2} onClick={handleAddCurrent} isLoading={loading}>
-                Add Current
-              </Button>
-            </Flex>
-          )}
-        </React.Fragment>
-      )}
     </React.Fragment>
   );
 };
