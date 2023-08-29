@@ -1,7 +1,7 @@
-import React from "react";
-import { Flex, Text, Avatar } from "@chakra-ui/react";
+import React, { useState, useEffect } from "react";
+import { Flex, Text, Avatar, Button, Spinner } from "@chakra-ui/react";
 
-const Navbar = () => {
+const Navbar = ({ user, userLoading, onOpen }) => {
   return (
     <Flex
       background="#FAF0E6"
@@ -13,7 +13,19 @@ const Navbar = () => {
       <Text fontWeight="bold" fontSize="20px">
         linkbucket
       </Text>
-      <Avatar name="SpectreFury" size="sm" />
+      {userLoading ? (
+        <Spinner />
+      ) : (
+        <React.Fragment>
+          {user ? (
+            <Avatar name={user.email} size="sm" />
+          ) : (
+            <Button variant="link" onClick={() => onOpen()}>
+              Log In
+            </Button>
+          )}
+        </React.Fragment>
+      )}
     </Flex>
   );
 };

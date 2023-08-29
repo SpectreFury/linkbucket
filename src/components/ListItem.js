@@ -14,15 +14,16 @@ const ListItem = ({ item }) => {
       _hover={{ background: "gray.800" }}
       flexDirection="column"
       onClick={() => {
-        navigate("/buckets");
+        navigate("/buckets", { state: item.id });
       }}
     >
       <Text color="white" fontWeight="bold">
         {item.title}
       </Text>
       <Text fontSize="12px" color="gray.600" fontWeight="medium">
-        12 links
+        {item.bucket.length} links
       </Text>
+      <Text fontSize="10px">{item.author}</Text>
     </Flex>
   );
 };
