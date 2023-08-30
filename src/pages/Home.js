@@ -36,7 +36,6 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import FilteredBucketList from "../components/FilteredBucketList";
-import { useSignOut } from "react-firebase-hooks/auth";
 import { AddIcon } from "@chakra-ui/icons";
 
 const Home = ({ user, isOpen, onOpen, onClose }) => {
@@ -53,7 +52,6 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
   const [tabIndex, setTabIndex] = useState(0);
   const [buckets, setBuckets] = useState([]);
   const [initialLoading, setInitialLoading] = useState(false);
-  const [signOut] = useSignOut(auth);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -71,7 +69,7 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
       title: bucketName,
       author: user.email,
       bucket: [],
-      upvotes: 0,
+      upvotes: [],
       visibility: bucketPrivacy,
     };
 

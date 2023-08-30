@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { DeleteIcon } from '@chakra-ui/icons';
 import { firestore } from '../firebaseConfig';
 import { deleteDoc, doc } from 'firebase/firestore';
+import { BiUpvote } from 'react-icons/bi';
 
 const ListItem = ({ item, setBuckets, user }) => {
   const navigate = useNavigate();
