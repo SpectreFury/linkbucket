@@ -5,7 +5,7 @@ import { DeleteIcon } from '@chakra-ui/icons';
 import { firestore } from '../firebaseConfig';
 import { deleteDoc, doc } from 'firebase/firestore';
 
-const ListItem = ({ item, setBuckets }) => {
+const ListItem = ({ item, setBuckets, user }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
@@ -49,7 +49,9 @@ const ListItem = ({ item, setBuckets }) => {
         <Tag size="sm" colorScheme="teal">
           {item.bucket.length} links
         </Tag>
-        <IconButton size="sm" icon={<DeleteIcon />} _hover={{ color: 'red.600' }} onClick={handleDelete} isLoading={loading} />
+        {user && user.email === item.author &&
+          <IconButton size="sm" icon={<DeleteIcon />} _hover={{ color: 'red.600' }} onClick={handleDelete} isLoading={loading} />
+        }
 
       </Flex>
     </Flex>

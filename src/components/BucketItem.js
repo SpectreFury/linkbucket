@@ -4,7 +4,7 @@ import { DeleteIcon } from '@chakra-ui/icons';
 import { firestore } from '../firebaseConfig';
 import { updateDoc, doc, arrayRemove } from 'firebase/firestore';
 
-const BucketItem = ({ item, setLinks, selectedBucket }) => {
+const BucketItem = ({ item, setLinks, selectedBucket, user }) => {
   const [loading, setLoading] = useState(false);
 
   const handleDelete = async (e) => {
@@ -49,7 +49,9 @@ const BucketItem = ({ item, setLinks, selectedBucket }) => {
         </Link>
       </Flex>
       <Flex>
-        <IconButton size='sm' icon={<DeleteIcon />} _hover={{ color: 'red.600' }} onClick={handleDelete} isLoading={loading} />
+        {user && user.email === selectedBucket.author &&
+          <IconButton size='sm' icon={<DeleteIcon />} _hover={{ color: 'red.600' }} onClick={handleDelete} isLoading={loading} />
+        }
       </Flex>
     </Flex>
   );

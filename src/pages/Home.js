@@ -182,7 +182,7 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
         </Flex>
       ) : (
         <React.Fragment>
-          {tabIndex === 0 && <BucketList buckets={buckets} setBuckets={setBuckets} />}
+          {tabIndex === 0 && <BucketList buckets={buckets} setBuckets={setBuckets} user={user} />}
           {tabIndex === 1 && (
             <FilteredBucketList buckets={buckets} user={user} setBuckets={setBuckets} />
           )}

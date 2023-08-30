@@ -100,7 +100,7 @@ const Buckets = ({ user }) => {
           </React.Fragment>
         )}
       </Flex>
-      <BucketItems links={links} setLinks={setLinks} selectedBucket={location.state} />
+      <BucketItems links={links} setLinks={setLinks} selectedBucket={location.state} user={user}/>
     </React.Fragment>
   );
 };
