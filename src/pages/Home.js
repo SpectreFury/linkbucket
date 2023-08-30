@@ -182,9 +182,9 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
         </Flex>
       ) : (
         <React.Fragment>
-          {tabIndex === 0 && <BucketList buckets={buckets} />}
+          {tabIndex === 0 && <BucketList buckets={buckets} setBuckets={setBuckets} />}
           {tabIndex === 1 && (
-            <FilteredBucketList buckets={buckets} user={user} />
+            <FilteredBucketList buckets={buckets} user={user} setBuckets={setBuckets} />
           )}
           {user && (
             <Flex justifyContent="center" mt={2} gap={4}>
