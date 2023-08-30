@@ -17,8 +17,6 @@ const Buckets = ({ user }) => {
   const [initialLoading, setInitialLoading] = useState(false);
   const navigate = useNavigate();
 
-  console.log(location.state);
-
   const handleAddCurrent = async () => {
     const duplicateLink = links.find((item) => item.link === tab.url);
     if (duplicateLink) {
@@ -43,14 +41,14 @@ const Buckets = ({ user }) => {
   };
 
   useEffect(() => {
-    // chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
-    //   console.log(tabs);
-    //   const url = tabs[0].url;
-    //   console.log(url);
-    //   if (tabs.length > 0) {
-    //     setTab(tabs[0]);
-    //   }
-    // });
+    chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
+      console.log(tabs);
+      const url = tabs[0].url;
+      console.log(url);
+      if (tabs.length > 0) {
+        setTab(tabs[0]);
+      }
+    });
 
     const fetchLinks = async () => {
       setInitialLoading(true);
@@ -102,7 +100,7 @@ const Buckets = ({ user }) => {
           </React.Fragment>
         )}
       </Flex>
-      <BucketItems links={links} />
+      <BucketItems links={links} setLinks={setLinks} selectedBucket={location.state} />
     </React.Fragment>
   );
 };
