@@ -67,6 +67,7 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
     setLoading(true);
 
     const data = {
+      username: user.displayName,
       title: bucketName,
       author: user.email,
       bucket: [],

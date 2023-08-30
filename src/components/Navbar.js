@@ -46,7 +46,7 @@ const Navbar = ({ user, userLoading, onOpen }) => {
               >
                 <Flex alignItems="center" gap={2}>
                   <Avatar name={user.email} size="sm" />
-                  <Text fontSize="12px">{user.email.split("@")[0]}</Text>
+                  <Text fontSize="12px">{user.displayName}</Text>
                 </Flex>
               </MenuButton>
               <MenuList>

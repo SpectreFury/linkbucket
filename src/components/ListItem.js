@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const ListItem = ({ item }) => {
   const navigate = useNavigate();
+  console.log(item);
 
   return (
     <Flex
@@ -23,7 +24,7 @@ const ListItem = ({ item }) => {
           {item.title}
         </Text>
         <Text fontSize="12px" fontWeight="semibold">
-          {item.author.split("@")[0]}
+          {item.username}
         </Text>
       </Flex>
       <Flex>
