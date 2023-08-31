@@ -11,7 +11,6 @@ function App() {
   const [user, loading, error] = useAuthState(auth);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-
   return (
     <main style={{ width: "400px", height: "600px", background: "#352F44" }}>
       <Navbar user={user} userLoading={loading} onOpen={onOpen} />

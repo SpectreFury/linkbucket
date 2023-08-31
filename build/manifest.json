@@ -2,13 +2,13 @@
   "manifest_version": 3,
   "name": "linkbucket",
   "description": "A chrome extension to post bucket of links that you want to share to the world.",
-  "version": "1.0",
+  "version": "0.0.0.1",
   "action": {
     "default_popup": "index.html",
     "default_icon": "logo192.png"
   },
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'; https://apis.google.com/js/api.js;",
+    "extension_pages": "script-src 'self'; object-src 'self';",
     "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
   },
   "permissions": ["tabs"]

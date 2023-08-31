@@ -5,7 +5,7 @@ import BucketItems from "../components/BucketItems";
 import { useLocation } from "react-router-dom";
 import { firestore } from "../firebaseConfig";
 import { getDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
-import { Flex, IconButton, Tooltip } from "@chakra-ui/react";
+import { Flex, IconButton, Tooltip, Text } from "@chakra-ui/react";
 import { ArrowBackIcon, AddIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 
@@ -86,7 +86,7 @@ const Buckets = ({ user }) => {
         </Tooltip>
         {user && (
           <React.Fragment>
-            {user.email === location.state.email && (
+            {user.email === location.state.author && (
               <Tooltip label="Add Current">
                 <IconButton
                   size="sm"
@@ -100,7 +100,8 @@ const Buckets = ({ user }) => {
           </React.Fragment>
         )}
       </Flex>
-      <BucketItems links={links} setLinks={setLinks} selectedBucket={location.state} />
+      <Text color='#D8D9DA' fontWeight='bold' mx={2}>{location.state.title}</Text>
+      <BucketItems links={links} setLinks={setLinks} selectedBucket={location.state} user={user} />
     </React.Fragment>
   );
 };

@@ -34,9 +34,10 @@ import {
   getDocs,
   collection,
   updateDoc,
+  query,
+  orderBy
 } from "firebase/firestore";
 import FilteredBucketList from "../components/FilteredBucketList";
-import { useSignOut } from "react-firebase-hooks/auth";
 import { AddIcon } from "@chakra-ui/icons";
 
 const Home = ({ user, isOpen, onOpen, onClose }) => {
@@ -53,7 +54,6 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
   const [tabIndex, setTabIndex] = useState(0);
   const [buckets, setBuckets] = useState([]);
   const [initialLoading, setInitialLoading] = useState(false);
-  const [signOut] = useSignOut(auth);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -71,7 +71,7 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
       title: bucketName,
       author: user.email,
       bucket: [],
-      upvotes: 0,
+      favorites: [],
       visibility: bucketPrivacy,
     };
 
@@ -92,7 +92,7 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
   useEffect(() => {
     const fetchBuckets = async () => {
       setInitialLoading(true);
-      const querySnapshot = await getDocs(collection(firestore, "buckets"));
+      const querySnapshot = await getDocs(query(collection(firestore, 'buckets'), orderBy('favorites', 'desc')));
       querySnapshot.docs.map((doc) =>
         setBuckets((prev) => [...prev, doc.data()])
       );
@@ -106,8 +106,11 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
     <React.Fragment>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Log In</ModalHeader>
+        <ModalContent maxWidth='80%' width='400px'>
+          <ModalHeader>
+            {formStep === 'login' && "Log In"}
+            {formStep === 'signup' && "Sign Up"}
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             {formStep === "login" && (
@@ -121,7 +124,7 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
       </Modal>
       <Modal isOpen={bucketIsOpen} onClose={bucketOnClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent maxWidth="80%" width="400px">
           <ModalHeader>Create Bucket</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
@@ -182,7 +185,7 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
         </Flex>
       ) : (
         <React.Fragment>
-          {tabIndex === 0 && <BucketList buckets={buckets} setBuckets={setBuckets} />}
+          {tabIndex === 0 && <BucketList buckets={buckets} setBuckets={setBuckets} user={user} />}
           {tabIndex === 1 && (
             <FilteredBucketList buckets={buckets} user={user} setBuckets={setBuckets} />
           )}
