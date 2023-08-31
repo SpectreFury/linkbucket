@@ -43,14 +43,14 @@ const Buckets = ({ user }) => {
   };
 
   useEffect(() => {
-    // chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
-    //   console.log(tabs);
-    //   const url = tabs[0].url;
-    //   console.log(url);
-    //   if (tabs.length > 0) {
-    //     setTab(tabs[0]);
-    //   }
-    // });
+    chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
+      console.log(tabs);
+      const url = tabs[0].url;
+      console.log(url);
+      if (tabs.length > 0) {
+        setTab(tabs[0]);
+      }
+    });
 
     const fetchLinks = async () => {
       setInitialLoading(true);
