@@ -17,8 +17,6 @@ const Buckets = ({ user }) => {
   const [initialLoading, setInitialLoading] = useState(false);
   const navigate = useNavigate();
 
-  console.log(location.state);
-
   const handleAddCurrent = async () => {
     const duplicateLink = links.find((item) => item.link === tab.url);
     if (duplicateLink) {
@@ -88,7 +86,7 @@ const Buckets = ({ user }) => {
         </Tooltip>
         {user && (
           <React.Fragment>
-            {user.email === location.state.email && (
+            {user.email === location.state.author && (
               <Tooltip label="Add Current">
                 <IconButton
                   size="sm"
