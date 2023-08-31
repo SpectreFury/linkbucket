@@ -34,6 +34,8 @@ import {
   getDocs,
   collection,
   updateDoc,
+  query,
+  orderBy
 } from "firebase/firestore";
 import FilteredBucketList from "../components/FilteredBucketList";
 import { AddIcon } from "@chakra-ui/icons";
@@ -69,7 +71,7 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
       title: bucketName,
       author: user.email,
       bucket: [],
-      upvotes: [],
+      favorites: [],
       visibility: bucketPrivacy,
     };
 
@@ -90,7 +92,7 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
   useEffect(() => {
     const fetchBuckets = async () => {
       setInitialLoading(true);
-      const querySnapshot = await getDocs(collection(firestore, "buckets"));
+      const querySnapshot = await getDocs(query(collection(firestore, 'buckets'), orderBy('favorites', 'desc')));
       querySnapshot.docs.map((doc) =>
         setBuckets((prev) => [...prev, doc.data()])
       );
@@ -104,7 +106,7 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
     <React.Fragment>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent maxWidth='280px'>
+        <ModalContent maxWidth='80%' width='400px'>
           <ModalHeader>
             {formStep === 'login' && "Log In"}
             {formStep === 'signup' && "Sign Up"}
@@ -122,7 +124,7 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
       </Modal>
       <Modal isOpen={bucketIsOpen} onClose={bucketOnClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent maxWidth="80%" width="400px">
           <ModalHeader>Create Bucket</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
