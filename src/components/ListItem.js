@@ -33,7 +33,7 @@ const ListItem = ({ item, setBuckets, user }) => {
       cursor="pointer"
       _hover={{ background: "gray.800", color: "#D8D9DA" }}
       onClick={() => {
-        navigate("/buckets", { state: { id: item.id, email: item.author } });
+        navigate("/buckets", { state: item });
       }}
       alignItems="center"
       justifyContent="space-between"
@@ -51,7 +51,7 @@ const ListItem = ({ item, setBuckets, user }) => {
           {item.bucket.length} links
         </Tag>
         {user && user.email === item.author &&
-          <IconButton size="sm" icon={<DeleteIcon />} _hover={{ color: 'red.600' }} onClick={handleDelete} isLoading={loading} />
+          <IconButton size="xs" icon={<DeleteIcon />} _hover={{ color: 'red.600' }} onClick={handleDelete} isLoading={loading} />
         }
 
       </Flex>

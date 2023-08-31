@@ -5,7 +5,7 @@ import BucketItems from "../components/BucketItems";
 import { useLocation } from "react-router-dom";
 import { firestore } from "../firebaseConfig";
 import { getDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
-import { Flex, IconButton, Tooltip } from "@chakra-ui/react";
+import { Flex, IconButton, Tooltip, Text } from "@chakra-ui/react";
 import { ArrowBackIcon, AddIcon } from "@chakra-ui/icons";
 import { useNavigate } from "react-router-dom";
 
@@ -16,6 +16,8 @@ const Buckets = ({ user }) => {
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(false);
   const navigate = useNavigate();
+
+  console.log(location.state);
 
   const handleAddCurrent = async () => {
     const duplicateLink = links.find((item) => item.link === tab.url);
@@ -41,14 +43,14 @@ const Buckets = ({ user }) => {
   };
 
   useEffect(() => {
-    chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
-      console.log(tabs);
-      const url = tabs[0].url;
-      console.log(url);
-      if (tabs.length > 0) {
-        setTab(tabs[0]);
-      }
-    });
+    // chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
+    //   console.log(tabs);
+    //   const url = tabs[0].url;
+    //   console.log(url);
+    //   if (tabs.length > 0) {
+    //     setTab(tabs[0]);
+    //   }
+    // });
 
     const fetchLinks = async () => {
       setInitialLoading(true);
@@ -100,6 +102,7 @@ const Buckets = ({ user }) => {
           </React.Fragment>
         )}
       </Flex>
+      <Text color='#D8D9DA' fontWeight='bold' mx={2}>{location.state.title}</Text>
       <BucketItems links={links} setLinks={setLinks} selectedBucket={location.state} user={user} />
     </React.Fragment>
   );

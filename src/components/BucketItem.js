@@ -7,7 +7,6 @@ import { updateDoc, doc, arrayRemove } from 'firebase/firestore';
 const BucketItem = ({ item, setLinks, selectedBucket, user }) => {
   const [loading, setLoading] = useState(false);
 
-
   const handleDelete = async (e) => {
     e.stopPropagation();
     setLoading(true);
@@ -50,8 +49,8 @@ const BucketItem = ({ item, setLinks, selectedBucket, user }) => {
         </Link>
       </Flex>
       <Flex>
-        {user && user.email === selectedBucket.email &&
-          <IconButton size='sm' icon={<DeleteIcon />} _hover={{ color: 'red.600' }} onClick={handleDelete} isLoading={loading} />
+        {user && user.email === selectedBucket.author &&
+          <IconButton size='xs' icon={<DeleteIcon />} _hover={{ color: 'red.600' }} onClick={handleDelete} isLoading={loading} />
         }
       </Flex>
     </Flex>

@@ -104,8 +104,11 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
     <React.Fragment>
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Log In</ModalHeader>
+        <ModalContent maxWidth='280px'>
+          <ModalHeader>
+            {formStep === 'login' && "Log In"}
+            {formStep === 'signup' && "Sign Up"}
+          </ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             {formStep === "login" && (
