@@ -31,11 +31,8 @@ import { firestore, auth } from "../firebaseConfig";
 import {
   addDoc,
   doc,
-  getDocs,
   collection,
   updateDoc,
-  query,
-  orderBy
 } from "firebase/firestore";
 import FilteredBucketList from "../components/FilteredBucketList";
 import { AddIcon } from "@chakra-ui/icons";
@@ -53,7 +50,7 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
   const [loading, setLoading] = useState(false);
   const [tabIndex, setTabIndex] = useState(0);
   const [buckets, setBuckets] = useState([]);
-  const [initialLoading, setInitialLoading] = useState(false);
+  const [filteredBuckets, setFilteredBuckets] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -81,7 +78,13 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
       await updateDoc(doc(firestore, "buckets", docRef.id), {
         id: docRef.id,
       });
-      setBuckets((prev) => [...prev, data]);
+      if (data.visibility === 'public') {
+        setBuckets((prev) => [...prev, data]);
+        setFilteredBuckets((prev) => [...prev, data])
+      }
+      else {
+        setFilteredBuckets((prev) => [...prev, data])
+      }
       bucketOnClose();
     } catch (error) {
       console.log("handleSubmit error", error);
@@ -89,18 +92,6 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
     setLoading(false);
   };
 
-  useEffect(() => {
-    const fetchBuckets = async () => {
-      setInitialLoading(true);
-      const querySnapshot = await getDocs(query(collection(firestore, 'buckets'), orderBy('favorites', 'desc')));
-      querySnapshot.docs.map((doc) =>
-        setBuckets((prev) => [...prev, doc.data()])
-      );
-      setInitialLoading(false);
-    };
-
-    fetchBuckets();
-  }, []);
 
   return (
     <React.Fragment>
@@ -179,23 +170,17 @@ const Home = ({ user, isOpen, onOpen, onClose }) => {
           </TabList>
         </Tabs>
       </Flex>
-      {initialLoading ? (
-        <Flex justifyContent="center" mt={40}>
-          <Spinner size="xl" color="blue.400" />
-        </Flex>
-      ) : (
-        <React.Fragment>
-          {tabIndex === 0 && <BucketList buckets={buckets} setBuckets={setBuckets} user={user} />}
-          {tabIndex === 1 && (
-            <FilteredBucketList buckets={buckets} user={user} setBuckets={setBuckets} />
-          )}
-          {user && (
-            <Flex justifyContent="center" mt={2} gap={4}>
-              <IconButton size="sm" icon={<AddIcon />} onClick={bucketOnOpen} />
-            </Flex>
-          )}
-        </React.Fragment>
-      )}
+      <React.Fragment>
+        {tabIndex === 0 && <BucketList user={user} buckets={buckets} setBuckets={setBuckets} />}
+        {tabIndex === 1 && (
+          <FilteredBucketList user={user} filteredBuckets={filteredBuckets} setFilteredBuckets={setFilteredBuckets} />
+        )}
+        {user && (
+          <Flex justifyContent="center" mt={2} gap={4}>
+            <IconButton size="sm" icon={<AddIcon />} onClick={bucketOnOpen} />
+          </Flex>
+        )}
+      </React.Fragment>
     </React.Fragment>
   );
 };
