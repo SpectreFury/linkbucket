@@ -12,8 +12,9 @@ const firebaseConfig = {
   projectId: "linkbucket-58186",
   storageBucket: "linkbucket-58186.appspot.com",
   messagingSenderId: "500455633988",
-  appId: "1:500455633988:web:49e5b216c5831eb0637811",
+  appId: "1:500455633988:web:49e5b216c5831eb0637811"
 };
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
