@@ -82,7 +82,7 @@ const ListItem = ({ item, setBuckets, user }) => {
       justifyContent="space-between"
     >
       <Flex flexDirection="column">
-        <Text color="white" fontWeight="bold">
+        <Text color="white" fontWeight="bold" flex={1}>
           {item.title}
         </Text>
         <Text fontSize="12px" fontWeight="semibold">
